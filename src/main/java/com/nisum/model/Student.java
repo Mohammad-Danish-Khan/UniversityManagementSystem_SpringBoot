@@ -1,10 +1,10 @@
 package com.nisum.model;
 
+import com.nisum.annotation.MyCustomAnnotation;
 import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
 
 import javax.persistence.*;
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -28,8 +28,9 @@ public  class Student {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @MyCustomAnnotation
     @Column(name = "created_by")
-    private String createdBy;
+    public String createdBy;
 
     @Column(name = "updated_by")
     private String updatedBy;
@@ -40,4 +41,12 @@ public  class Student {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     Set<Course> courses;
+
+
+    public void setCreatedBy() throws NoSuchFieldException {
+        Student student=new Student();
+        Field field=student.getClass().getField("createdBy");
+        MyCustomAnnotation myCustomAnnotation=field.getAnnotation(MyCustomAnnotation.class);
+        this.createdBy=myCustomAnnotation.user();
+    }
 }

@@ -30,11 +30,11 @@ public class StudentController {
     }
 
     @PostMapping
-    public void addStudent(@RequestBody Student student){
+    public void addStudent(@RequestBody Student student) throws NoSuchFieldException {
         studentService.addStudent(student);
     }
 
-    @PutMapping
+    @PutMapping("{id}")
     public void updateStudent(@PathVariable Long id, @RequestBody Student student){
         studentService.updateStudent(id,student);
     }

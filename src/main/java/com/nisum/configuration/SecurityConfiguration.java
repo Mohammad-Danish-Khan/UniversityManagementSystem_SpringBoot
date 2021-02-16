@@ -1,6 +1,7 @@
 package com.nisum.configuration;
 
 import com.nisum.filter.JwtFilter;
+import com.nisum.model.User;
 import com.nisum.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,9 +12,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.security.Principal;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -44,12 +50,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
             http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-
-
-
-//                    .authorizeRequests().antMatchers("/hello").hasRole("ad")
-//                    .authorizeRequests().antMatchers("/authenticate").permitAll()
-//                    .anyRequest().authenticated();
     }
 
     @Override

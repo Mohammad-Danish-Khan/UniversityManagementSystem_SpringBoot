@@ -25,12 +25,7 @@ public class CourseService {
     }
     public void addCourse(Course course){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-             username = ((UserDetails)principal).getUsername();
-        } else {
-             username = principal.toString();
-        }
+        String username = ((UserDetails)principal).getUsername();
         course.setCreatedBy(username);
         course.setUpdatedBy(username);
         course.setCreatedAt(LocalDateTime.now());
@@ -43,18 +38,13 @@ public class CourseService {
 
     public void updateCourse(Long id,Course course){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = ((UserDetails)principal).getUsername();
         course.setUpdatedBy(username);
         course.setUpdatedAt(LocalDateTime.now());
         courseRepository.save(course);
     }
-    public void deleteCourse(Long id , Course course){
-        courseRepository.delete(course);
+    public void deleteCourse(Long id){
+        courseRepository.deleteById(id);
     }
 
 }

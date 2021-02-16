@@ -35,8 +35,8 @@ public class CourseController {
     }
 
     @DeleteMapping("{id}")
-    public  void deleteCourse(@PathVariable Long id,@RequestBody Course course){
-        courseService.deleteCourse(id,course);
+    public  void deleteCourse(@PathVariable Long id){
+        courseService.deleteCourse(id);
     }
 
 }
